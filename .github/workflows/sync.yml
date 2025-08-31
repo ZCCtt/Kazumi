@@ -3,16 +3,16 @@ name: Sync Fork
 on:
   schedule:
     - cron: "0 0 * * *"  # 每天 UTC 0 点同步
-  workflow_dispatch:      # 允许手动触发
+  workflow_dispatch:
 
 jobs:
   sync:
     runs-on: ubuntu-latest
 
     permissions:
-      actions: write     # 工作流文件的权限
-      contents: write    # 代码内容的权限
-      pull-requests: write  # PR 权限
+      actions: write
+      contents: write
+      pull-requests: write
 
     steps:
       - name: Checkout repository
@@ -29,22 +29,27 @@ jobs:
           git fetch upstream
 
       - name: Sync with upstream
+        env:
+          MY_TOKEN: ${{ secrets.MY_TOKEN }}
+          GH_TOKEN: ${{ secrets.MY_TOKEN }}
         run: |
-          # 尝试合并上游变更
           if git merge upstream/main --no-edit; then
             echo "合并成功，推送变更"
             git push origin main
           else
             echo "检测到冲突，创建PR"
             git checkout -b "sync-$(date +%s)"
-            git commit -am "解决同步冲突 $(date)"
+            git add .
+            git commit -m "解决同步冲突 $(date)" || echo "无变更可提交"
             git push origin HEAD
-            gh pr create \
-              --title "上游同步: $(date +'%Y-%m-%d')" \
-              --body "自动解决同步冲突" \
-              --base main \
-              --head $(git branch --show-current)
+            # 检查是否有实际提交需要PR
+            if [ "$(git log origin/main..HEAD)" != "" ]; then
+              gh pr create \
+                --title "上游同步: $(date +'%Y-%m-%d')" \
+                --body "自动解决同步冲突" \
+                --base main \
+                --head $(git branch --show-current)
+            else
+              echo "新分支与 main 无差异，不创建 PR"
+            fi
           fi
-        env:
-          MY_TOKEN: ${{ secrets.MY_TOKEN }}
-          GH_TOKEN: ${{ secrets.MY_TOKEN }}
