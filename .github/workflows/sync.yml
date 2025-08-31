@@ -47,3 +47,4 @@ jobs:
           fi
         env:
           MY_TOKEN: ${{ secrets.MY_TOKEN }}
+GH_TOKEN: ${{ secrets.MY_TOKEN }}
