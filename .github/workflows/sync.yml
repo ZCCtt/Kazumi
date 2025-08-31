@@ -38,17 +38,21 @@ jobs:
             git push origin main
           else
             echo "检测到冲突，创建PR"
-            git checkout -b "sync-$(date +%s)"
+            # 新建分支并解决冲突
+            new_branch="sync-$(date +%s)"
+            git checkout -b "$new_branch"
             git add .
             git commit -m "解决同步冲突 $(date)" || echo "无变更可提交"
             git push origin HEAD
-            # 检查是否有实际提交需要PR
+            # 强制拉取远程 main，确保分支对比准确
+            git fetch origin main
+            # 检查是否有实际提交需要 PR
             if [ "$(git log origin/main..HEAD)" != "" ]; then
               gh pr create \
                 --title "上游同步: $(date +'%Y-%m-%d')" \
                 --body "自动解决同步冲突" \
                 --base main \
-                --head $(git branch --show-current)
+                --head "$new_branch"
             else
               echo "新分支与 main 无差异，不创建 PR"
             fi
