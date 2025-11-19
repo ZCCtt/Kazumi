@@ -225,6 +225,7 @@ class SettingBoxKey {
       danmakuArea = 'danmakuArea',
       danmakuColor = 'danmakuColor',
       danmakuDuration = 'danmakuDuration',
+      danmakuLineHeight = 'danmakuLineHeight',
       danmakuEnabledByDefault = 'danmakuEnabledByDefault',
       danmakuBiliBiliSource = 'danmakuBiliBiliSource',
       danmakuGamerSource = 'danmakuGamerSource',
@@ -263,5 +264,6 @@ class SettingBoxKey {
       searchNotShowWatchedBangumis = 'searchNotShowWatchedBangumis',
       searchNotShowAbandonedBangumis = 'searchNotShowAbandonedBangumis',
       timelineNotShowAbandonedBangumis = 'timelineNotShowAbandonedBangumis',
-      timelineNotShowWatchedBangumis = 'timelineNotShowWatchedBangumis';
+      timelineNotShowWatchedBangumis = 'timelineNotShowWatchedBangumis',
+      useSystemFont = 'useSystemFont';
 }
