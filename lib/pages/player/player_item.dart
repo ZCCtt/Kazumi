@@ -694,10 +694,13 @@ class _PlayerItemState extends State<PlayerItem>
       // 历史记录相关
       if (playerController.playerPlaying && !videoPageController.loading) {
         if (!WebDav().isHistorySyncing) {
+          final pluginName = videoPageController.isOfflineMode
+              ? videoPageController.offlinePluginName
+              : videoPageController.currentPlugin.name;
           historyController.updateHistory(
-              videoPageController.currentEpisode,
+              videoPageController.actualEpisodeNumber,
               videoPageController.currentRoad,
-              videoPageController.currentPlugin.name,
+              pluginName,
               videoPageController.bangumiItem,
               playerController.playerPosition,
               videoPageController.src,

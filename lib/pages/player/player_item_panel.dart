@@ -17,6 +17,7 @@ import 'package:hive_ce/hive.dart';
 import 'package:kazumi/utils/storage.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:kazumi/utils/timed_shutdown_service.dart';
+import 'package:kazumi/pages/download/download_controller.dart';
 
 class PlayerItemPanel extends StatefulWidget {
   const PlayerItemPanel({
@@ -85,6 +86,7 @@ class _PlayerItemPanelState extends State<PlayerItemPanel> {
   final VideoPageController videoPageController =
       Modular.get<VideoPageController>();
   final PlayerController playerController = Modular.get<PlayerController>();
+  final DownloadController downloadController = Modular.get<DownloadController>();
   final TextEditingController textController = TextEditingController();
   final FocusNode textFieldFocus = FocusNode();  
   // SVG Caches
