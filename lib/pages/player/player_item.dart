@@ -131,13 +131,12 @@ class _PlayerItemState extends State<PlayerItem>
   PointerDeviceKind? _lastTapPointerKind;
   PointerDeviceKind? _lastDoubleTapPointerKind;
 
-  double lastVolume = 0;
-
   late final AnimationController _panelVisibilityController;
   late final AnimationController _screenshotFeedbackController;
   late final Animation<double> _screenshotFeedbackAnimation;
 
   double lastPlayerSpeed = 1.0;
+  late double longPressPlaySpeed;
   int episodeNum = 0;
   bool? _lastPipPlaying;
   bool? _lastPipDanmakuEnabled;
@@ -887,12 +886,7 @@ class _PlayerItemState extends State<PlayerItem>
               .setVolume(playerController.playback.volume - 10);
           break;
         case 'mute':
-          if (playerController.playback.volume > 0) {
-            lastVolume = playerController.playback.volume;
-            await playerController.setVolume(0);
-          } else {
-            await playerController.setVolume(lastVolume);
-          }
+          await playerController.toggleMute();
           break;
         default:
           return;
@@ -1715,6 +1709,8 @@ class _PlayerItemState extends State<PlayerItem>
         GStorage.getSetting(SettingsKeys.brightnessVolumeGesture);
     playerControllerLayerDisappearTime =
         GStorage.getSetting(SettingsKeys.playerControllerLayerDisappearTime);
+    longPressPlaySpeed =
+        GStorage.getSetting(SettingsKeys.defaultShortcutForwardPlaySpeed);
     unawaited(_bindAudioService());
     playerTimer = getPlayerTimer();
     windowManager.addListener(this);
@@ -1862,7 +1858,7 @@ class _PlayerItemState extends State<PlayerItem>
                           playerController.panel.showPlaySpeed = true;
                         });
                         lastPlayerSpeed = playerController.playback.playerSpeed;
-                        setPlaybackSpeed(2.0);
+                        setPlaybackSpeed(longPressPlaySpeed);
                       },
                       onLongPressEnd: (_) {
                         if (playerController.panel.lockPanel) {
