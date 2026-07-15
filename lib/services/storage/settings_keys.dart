@@ -248,12 +248,12 @@ class SettingsKeys {
   );
   static const enableGitProxy = SettingKey<bool>(
     _SettingBoxKey.enableGitProxy,
-    false,
+    true,
     group: SettingGroup.proxy,
   );
   static const enableBangumiProxy = SettingKey<bool>(
     _SettingBoxKey.enableBangumiProxy,
-    false,
+    true,
     group: SettingGroup.proxy,
   );
   static const enableSystemProxy = SettingKey<bool>(
@@ -446,6 +446,13 @@ class SettingsKeys {
     '',
     group: SettingGroup.download,
   );
+  // macOS only: security-scoped bookmark that keeps downloadDirectory
+  // writable across app restarts under the sandbox.
+  static const downloadDirectoryBookmark = SettingKey<String>(
+    'downloadDirectoryBookmark',
+    '',
+    group: SettingGroup.download,
+  );
   static const shortcutDialogShown = SettingKey<bool>(
     _SettingBoxKey.shortcutDialogShown,
     false,
@@ -589,6 +596,7 @@ class SettingsKeys {
     downloadParallelSegments,
     downloadDanmaku,
     downloadDirectory,
+    downloadDirectoryBookmark,
     shortcutDialogShown,
     bangumiSyncEnable,
     bangumiAccessToken,
