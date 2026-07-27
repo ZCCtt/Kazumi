@@ -48,6 +48,7 @@ class PlayerController implements Disposable {
     shaderAssetService: shaderAssetService,
     debug: debug,
     videoUrl: () => videoUrl,
+    isLocalPlayback: () => isLocalPlayback,
   );
   late final PlayerSyncPlayController syncplay = PlayerSyncPlayController(
     bangumiId: () => bangumiId,
@@ -457,13 +458,11 @@ class PlayerController implements Disposable {
       String room,
       String username,
       Future<void> Function(int episode, {int currentRoad, int offset})
-          changeEpisode,
-      {bool enableTLS = true}) async {
+          changeEpisode) async {
     await syncplay.createRoom(
       room,
       username,
       changeEpisode,
-      enableTLS: enableTLS,
     );
   }
 
