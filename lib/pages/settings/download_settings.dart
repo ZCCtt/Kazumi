@@ -111,60 +111,43 @@ class _DownloadSettingsPageState extends State<DownloadSettingsPage> {
     return SettingsDetailScaffold(
       title: const Text('下载设置'),
       body: SettingsList(
-        maxWidth: 1000,
         sections: [
           SettingsSection(
             title: Text('并发设置'),
             tiles: [
-              SettingsTile(
+              SettingsSliderTile(
+                leading: Icons.video_library_rounded,
                 title: Text('同时下载集数'),
-                description: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '同时下载 $parallelEpisodes 集',
-                    ),
-                    Slider(
-                      value: parallelEpisodes.toDouble(),
-                      min: 1,
-                      max: 5,
-                      divisions: 4,
-                      label: '$parallelEpisodes',
-                      onChanged: (value) {
-                        setState(() => parallelEpisodes = value.toInt());
-                        GStorage.putSetting(
-                          SettingsKeys.downloadParallelEpisodes,
-                          parallelEpisodes,
-                        );
-                      },
-                    ),
-                  ],
-                ),
+                description: Text('并行下载的剧集数量'),
+                value: parallelEpisodes.toDouble(),
+                min: 1,
+                max: 5,
+                divisions: 4,
+                valueLabel: '$parallelEpisodes 集',
+                onChanged: (value) {
+                  setState(() => parallelEpisodes = value.toInt());
+                  GStorage.putSetting(
+                    SettingsKeys.downloadParallelEpisodes,
+                    parallelEpisodes,
+                  );
+                },
               ),
-              SettingsTile(
+              SettingsSliderTile(
+                leading: Icons.call_split_rounded,
                 title: Text('分片并发数'),
-                description: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '每集同时下载 $parallelSegments 个分片',
-                    ),
-                    Slider(
-                      value: parallelSegments.toDouble(),
-                      min: 1,
-                      max: 10,
-                      divisions: 9,
-                      label: '$parallelSegments',
-                      onChanged: (value) {
-                        setState(() => parallelSegments = value.toInt());
-                        GStorage.putSetting(
-                          SettingsKeys.downloadParallelSegments,
-                          parallelSegments,
-                        );
-                      },
-                    ),
-                  ],
-                ),
+                description: Text('每集同时下载的分片数量'),
+                value: parallelSegments.toDouble(),
+                min: 1,
+                max: 10,
+                divisions: 9,
+                valueLabel: '$parallelSegments 个',
+                onChanged: (value) {
+                  setState(() => parallelSegments = value.toInt());
+                  GStorage.putSetting(
+                    SettingsKeys.downloadParallelSegments,
+                    parallelSegments,
+                  );
+                },
               ),
             ],
           ),
@@ -172,6 +155,7 @@ class _DownloadSettingsPageState extends State<DownloadSettingsPage> {
             title: Text('缓存设置'),
             tiles: [
               SettingsTile(
+                leading: Icons.folder_rounded,
                 title: Text('下载位置'),
                 description: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -208,6 +192,7 @@ class _DownloadSettingsPageState extends State<DownloadSettingsPage> {
                 onPressed: (_) => _selectDownloadDirectory(),
               ),
               SettingsTile.switchTile(
+                leading: Icons.subtitles_rounded,
                 onToggle: (value) {
                   setState(() => downloadDanmaku = value ?? !downloadDanmaku);
                   GStorage.putSetting(
@@ -225,6 +210,7 @@ class _DownloadSettingsPageState extends State<DownloadSettingsPage> {
             title: Text('说明'),
             tiles: [
               SettingsTile(
+                leading: Icons.info_outline_rounded,
                 title: Text('关于并发设置'),
                 description: Text(
                   '• 集数并发：同时下载多少集视频\n'

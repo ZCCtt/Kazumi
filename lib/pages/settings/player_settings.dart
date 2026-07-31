@@ -273,11 +273,12 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
       child: SettingsDetailScaffold(
         title: const Text('播放设置'),
         body: SettingsList(
-          maxWidth: 1000,
           sections: [
             SettingsSection(
+              title: Text('解码与渲染'),
               tiles: [
                 SettingsTile.switchTile(
+                  leading: Icons.memory_rounded,
                   onToggle: (value) async {
                     hAenable = value ?? !hAenable;
                     await GStorage.putSetting<bool>(
@@ -288,6 +289,7 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
                   initialValue: hAenable,
                 ),
                 SettingsTile(
+                  leading: Icons.developer_board_rounded,
                   onPressed: (_) async {
                     await context.pushNamed('/settings/player/decoder');
                   },
@@ -296,6 +298,7 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
                 ),
                 if (Platform.isAndroid) ...[
                   SettingsTile(
+                    leading: Icons.tv_rounded,
                     onPressed: (_) async {
                       await context.pushNamed('/settings/player/renderer');
                     },
@@ -304,6 +307,7 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
                   ),
                 ],
                 SettingsTile.switchTile(
+                  leading: Icons.data_saver_on_rounded,
                   enabled: !MeteredNetworkService.isMetered,
                   onToggle: (value) async {
                     lowMemoryMode = value ?? !lowMemoryMode;
@@ -321,6 +325,7 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
                 ),
                 if (Platform.isAndroid) ...[
                   SettingsTile.switchTile(
+                    leading: Icons.graphic_eq_rounded,
                     onToggle: (value) async {
                       androidEnableOpenSLES = value ?? !androidEnableOpenSLES;
                       await GStorage.putSetting<bool>(
@@ -334,6 +339,7 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
                   ),
                 ],
                 SettingsTile(
+                  leading: Icons.auto_awesome_rounded,
                   onPressed: (_) async {
                     context.pushNamed('/settings/player/super');
                   },
@@ -342,8 +348,10 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
               ],
             ),
             SettingsSection(
+              title: Text('播放行为'),
               tiles: [
                 SettingsTile.switchTile(
+                  leading: Icons.headphones_rounded,
                   onToggle: (value) async {
                     backgroundPlayback = value ?? !backgroundPlayback;
                     await GStorage.putSetting<bool>(
@@ -355,6 +363,7 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
                   initialValue: backgroundPlayback,
                 ),
                 SettingsTile.switchTile(
+                  leading: Icons.history_rounded,
                   onToggle: (value) async {
                     playResume = value ?? !playResume;
                     await GStorage.putSetting<bool>(
@@ -366,6 +375,7 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
                   initialValue: playResume,
                 ),
                 SettingsTile.switchTile(
+                  leading: Icons.playlist_play_rounded,
                   onToggle: (value) async {
                     autoPlayNext = value ?? !autoPlayNext;
                     await GStorage.putSetting<bool>(
@@ -378,6 +388,7 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
                 ),
                 if (Platform.isAndroid)
                   SettingsTile.switchTile(
+                    leading: Icons.picture_in_picture_alt_rounded,
                     onToggle: (value) async {
                       androidAutoEnterPIP = value ?? !androidAutoEnterPIP;
                       await GStorage.putSetting<bool>(
@@ -392,6 +403,7 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
                     initialValue: androidAutoEnterPIP,
                   ),
                 SettingsTile.switchTile(
+                  leading: Icons.block_rounded,
                   onToggle: (value) async {
                     forceAdBlocker = value ?? !forceAdBlocker;
                     await GStorage.putSetting<bool>(
@@ -403,6 +415,7 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
                   initialValue: forceAdBlocker,
                 ),
                 SettingsTile.switchTile(
+                  leading: Icons.animation_rounded,
                   onToggle: (value) async {
                     playerDisableAnimations = value ?? !playerDisableAnimations;
                     await GStorage.putSetting<bool>(
@@ -416,6 +429,7 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
                 ),
                 if (!isDesktop())
                   SettingsTile.switchTile(
+                    leading: Icons.swipe_vertical_rounded,
                     onToggle: (value) async {
                       brightnessVolumeGesture =
                           value ?? !brightnessVolumeGesture;
@@ -429,6 +443,7 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
                     initialValue: brightnessVolumeGesture,
                   ),
                 SettingsTile.switchTile(
+                  leading: Icons.visibility_off_rounded,
                   onToggle: (value) async {
                     privateMode = value ?? !privateMode;
                     await GStorage.putSetting<bool>(
@@ -442,8 +457,10 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
               ],
             ),
             SettingsSection(
+              title: Text('诊断'),
               tiles: [
                 SettingsTile.switchTile(
+                  leading: Icons.error_outline_rounded,
                   onToggle: (value) async {
                     showPlayerError = value ?? !showPlayerError;
                     await GStorage.putSetting<bool>(
@@ -455,6 +472,7 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
                   initialValue: showPlayerError,
                 ),
                 SettingsTile.switchTile(
+                  leading: Icons.bug_report_rounded,
                   onToggle: (value) async {
                     playerDebugMode = value ?? !playerDebugMode;
                     await GStorage.putSetting<bool>(
@@ -466,6 +484,7 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
                   initialValue: playerDebugMode,
                 ),
                 SettingsTile(
+                  leading: Icons.receipt_long_rounded,
                   onPressed: (_) async {
                     if (playerLogLevelMenuController.isOpen) {
                       playerLogLevelMenuController.close();
@@ -510,57 +529,54 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
               ],
             ),
             SettingsSection(
+              title: Text('播放参数'),
               tiles: [
-                SettingsTile(
+                SettingsSliderTile(
+                  leading: Icons.speed_rounded,
                   title: Text('默认倍速'),
-                  description: Slider(
-                    value: defaultPlaySpeed,
-                    min: 0.25,
-                    max: 3,
-                    divisions: 11,
-                    label: '${defaultPlaySpeed}x',
-                    onChanged: (value) {
-                      updateDefaultPlaySpeed(
-                          double.parse(value.toStringAsFixed(2)));
-                    },
-                  ),
+                  value: defaultPlaySpeed,
+                  min: 0.25,
+                  max: 3,
+                  divisions: 11,
+                  valueLabel: '${defaultPlaySpeed}x',
+                  onChanged: (value) => updateDefaultPlaySpeed(
+                      double.parse(value.toStringAsFixed(2))),
+                ),
+                SettingsSliderTile(
+                  leading: Icons.fast_forward_rounded,
+                  title: Text('长按倍速'),
+                  description: Text('长按屏幕或按住方向键时的倍速'),
+                  value: defaultShortcutForwardPlaySpeed,
+                  min: 1.25,
+                  max: 3,
+                  divisions: 7,
+                  valueLabel: '${defaultShortcutForwardPlaySpeed}x',
+                  onChanged: (value) => updateDefaultShortcutForwardPlaySpeed(
+                      double.parse(value.toStringAsFixed(2))),
+                ),
+                SettingsSliderTile(
+                  leading: Icons.swap_horiz_rounded,
+                  title: Text('方向键跳转'),
+                  description: Text('左右方向键的快进/快退秒数'),
+                  value: playerArrowKeySkipTime.toDouble(),
+                  min: 0,
+                  max: 15,
+                  divisions: 15,
+                  valueLabel: '$playerArrowKeySkipTime 秒',
+                  onChanged: (value) {
+                    final newArrowKeySkipTime = value.toInt();
+                    if (newArrowKeySkipTime == playerArrowKeySkipTime) {
+                      return;
+                    }
+                    GStorage.putSetting<int>(
+                        SettingsKeys.arrowKeySkipTime, newArrowKeySkipTime);
+                    setState(() {
+                      playerArrowKeySkipTime = newArrowKeySkipTime;
+                    });
+                  },
                 ),
                 SettingsTile(
-                  title: Text('默认方向键/长按倍速'),
-                  description: Slider(
-                    value: defaultShortcutForwardPlaySpeed,
-                    min: 1.25,
-                    max: 3,
-                    divisions: 7,
-                    label: '${defaultShortcutForwardPlaySpeed}x',
-                    onChanged: (value) {
-                      updateDefaultShortcutForwardPlaySpeed(
-                          double.parse(value.toStringAsFixed(2)));
-                    },
-                  ),
-                ),
-                SettingsTile(
-                  description: Slider(
-                    value: playerArrowKeySkipTime.toDouble(),
-                    min: 0,
-                    max: 15,
-                    divisions: 15,
-                    label: '$playerArrowKeySkipTime秒',
-                    onChanged: (value) {
-                      final newArrowKeySkipTime = value.toInt();
-
-                      if (value != playerArrowKeySkipTime) {
-                        GStorage.putSetting<int>(
-                            SettingsKeys.arrowKeySkipTime, newArrowKeySkipTime);
-                        setState(() {
-                          playerArrowKeySkipTime = newArrowKeySkipTime;
-                        });
-                      }
-                    },
-                  ),
-                  title: Text('左右方向键的快进/快退秒数'),
-                ),
-                SettingsTile(
+                  leading: Icons.skip_next_rounded,
                   onPressed: (_) async {
                     await updateButtonSkipTime();
                   },
@@ -568,20 +584,20 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
                   description: Text('顶栏跳过按钮的秒数'),
                   value: Text('$playerButtonSkipTime 秒'),
                 ),
-                SettingsTile(
-                  title: Text(
-                      '播放控制器消失时间：${formatPlayerControllerLayerDisappearSeconds(playerControllerLayerDisappearSeconds)}'),
-                  description: Slider(
-                    value: playerControllerLayerDisappearSeconds,
-                    min: _minPlayerControllerLayerDisappearSeconds,
-                    max: _maxPlayerControllerLayerDisappearSeconds,
-                    divisions: _playerControllerLayerDisappearDivisions,
-                    label: formatPlayerControllerLayerDisappearSeconds(
-                        playerControllerLayerDisappearSeconds),
-                    onChanged: updatePlayerControllerLayerDisappearSeconds,
-                  ),
+                SettingsSliderTile(
+                  leading: Icons.timer_rounded,
+                  title: Text('控制栏消失时间'),
+                  description: Text('播放控制器自动隐藏前的停留时长'),
+                  value: playerControllerLayerDisappearSeconds,
+                  min: _minPlayerControllerLayerDisappearSeconds,
+                  max: _maxPlayerControllerLayerDisappearSeconds,
+                  divisions: _playerControllerLayerDisappearDivisions,
+                  valueLabel: formatPlayerControllerLayerDisappearSeconds(
+                      playerControllerLayerDisappearSeconds),
+                  onChanged: updatePlayerControllerLayerDisappearSeconds,
                 ),
                 SettingsTile(
+                  leading: Icons.aspect_ratio_rounded,
                   onPressed: (_) async {
                     if (playerAspectRatioMenuController.isOpen) {
                       playerAspectRatioMenuController.close();
@@ -629,6 +645,7 @@ class _PlayerSettingsPageState extends State<PlayerSettingsPage> {
             SettingsSection(
               tiles: [
                 SettingsTile(
+                  leading: Icons.settings_backup_restore_rounded,
                   onPressed: (_) => resetPlayerSettings(),
                   title: Text('恢复默认设置'),
                   description: Text('将播放相关设置恢复为默认值'),

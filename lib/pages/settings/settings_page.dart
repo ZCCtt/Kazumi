@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:kazumi/bean/appbar/sys_app_bar.dart';
 import 'package:kazumi/bean/settings/settings_detail_scaffold.dart';
+import 'package:kazumi/bean/settings/settings_list.dart';
 import 'package:kazumi/pages/about/about_page.dart';
 import 'package:kazumi/pages/my/my_controller.dart';
 import 'package:kazumi/pages/plugin_editor/plugin_view_page.dart';
@@ -330,8 +331,8 @@ class _SettingsPageState extends State<SettingsPage> {
               padding: const EdgeInsets.fromLTRB(28, 16, 28, 8),
               child: Text(
                 group.title,
-                style: textTheme.titleSmall
-                    ?.copyWith(color: colorScheme.onSurfaceVariant),
+                style:
+                    textTheme.titleSmall?.copyWith(color: colorScheme.primary),
               ),
             ),
             for (final category in group.categories)
@@ -354,27 +355,22 @@ class _SettingsPageState extends State<SettingsPage> {
       children: [
         for (final group in _settingsGroups) ...[
           Padding(
-            padding: const EdgeInsets.fromLTRB(4, 16, 4, 8),
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
             child: Text(
               group.title,
-              style: textTheme.titleSmall
-                  ?.copyWith(color: colorScheme.onSurfaceVariant),
+              style: textTheme.titleSmall?.copyWith(color: colorScheme.primary),
             ),
           ),
-          Material(
-            // Material, not Container, so the ink ripple paints above the fill.
-            color: colorScheme.surfaceContainerLow,
-            borderRadius: BorderRadius.circular(16),
-            clipBehavior: Clip.antiAlias,
-            child: Column(
-              children: [
-                for (final category in group.categories)
-                  _CategoryTile(
-                    category: category,
-                    onTap: () => setState(() => _selected = category),
-                  ),
-              ],
-            ),
+          SettingsSplitGroup(
+            children: [
+              for (final category in group.categories)
+                SettingsCategoryTile(
+                  icon: category.icon,
+                  title: category.label,
+                  description: category.description,
+                  onTap: () => setState(() => _selected = category),
+                ),
+            ],
           ),
         ],
       ],
@@ -427,63 +423,6 @@ class _RailDestination extends StatelessWidget {
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _CategoryTile extends StatelessWidget {
-  const _CategoryTile({required this.category, required this.onTap});
-
-  final _SettingsCategory category;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-    return InkWell(
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        child: Row(
-          children: [
-            Container(
-              width: 36,
-              height: 36,
-              decoration: BoxDecoration(
-                color: colorScheme.secondaryContainer,
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                category.icon,
-                size: 18,
-                color: colorScheme.onSecondaryContainer,
-              ),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(category.label, style: textTheme.bodyLarge),
-                  const SizedBox(height: 2),
-                  Text(
-                    category.description,
-                    style: textTheme.bodySmall
-                        ?.copyWith(color: colorScheme.onSurfaceVariant),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
-            ),
-            Icon(
-              Icons.chevron_right_rounded,
-              color: colorScheme.onSurfaceVariant,
-            ),
-          ],
         ),
       ),
     );
