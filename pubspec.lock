@@ -416,10 +416,10 @@ packages:
     dependency: "direct main"
     description:
       name: ech_http
-      sha256: "7b179bbb0cba2f517d5f8fc526e6bb98d96530e6d7a75f7057fce74652967643"
+      sha256: "5f6cb0e9bbad24ed2b2a62ac5db40307b1f603464d6ee35d0a4a59a5f6494d63"
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.3"
+    version: "0.2.4"
   equatable:
     dependency: transitive
     description:
@@ -1012,8 +1012,8 @@ packages:
     dependency: "direct main"
     description:
       path: media_kit
-      ref: "83b7ca63772856e1ea0158916177e136f7b7b0be"
-      resolved-ref: "83b7ca63772856e1ea0158916177e136f7b7b0be"
+      ref: cd75bcfe94ba45ebb6f6b940c68e072d079aee14
+      resolved-ref: cd75bcfe94ba45ebb6f6b940c68e072d079aee14
       url: "https://github.com/Predidit/media-kit.git"
     source: git
     version: "1.1.11"
@@ -1021,8 +1021,8 @@ packages:
     dependency: "direct main"
     description:
       path: media_kit_video
-      ref: "83b7ca63772856e1ea0158916177e136f7b7b0be"
-      resolved-ref: "83b7ca63772856e1ea0158916177e136f7b7b0be"
+      ref: cd75bcfe94ba45ebb6f6b940c68e072d079aee14
+      resolved-ref: cd75bcfe94ba45ebb6f6b940c68e072d079aee14
       url: "https://github.com/Predidit/media-kit.git"
     source: git
     version: "1.2.5"
